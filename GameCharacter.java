@@ -1,6 +1,8 @@
 /**
  * GameCharacter.java
  * @author Emma Shumadine
+ * modifications: 
+ * Lily Orth-Smith added toString() dec 4
  * */
 
 public class GameCharacter {
@@ -18,6 +20,7 @@ public class GameCharacter {
     currentHP = maxHP;
     weapon = w;
   }
+  
   
   /**
    * Attacks the target with the weapon. Returns -1 if the attack misses, and the damage of the attack otherwise.
@@ -97,5 +100,9 @@ public class GameCharacter {
    * */
   public void setWeapon(Weapon w) {
     weapon = w;
+  }
+  
+  public String toString() {
+     return ("HP: " + currentHP + "/" + maxHP + " Weapon: " + weapon);
   }
 }

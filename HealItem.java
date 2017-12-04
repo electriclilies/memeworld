@@ -1,3 +1,5 @@
+//mon dec 4, lily orth-smith added .equals methods
+
 public class HealItem extends Item {
   
   private int hp;
@@ -29,4 +31,18 @@ public class HealItem extends Item {
     return super.toString() + " Heals " + hp + " hp.";
   }
   
+  public boolean equals(HealItem healItem) {
+     return (super.equals(healItem) && (hp == healItem.getHp()));
+  }
+  
+  public static void main(String[] args) {
+    Item rock = new Item("Rock", "Does nothing.");
+    HealItem healRock = new HealItem("Rock", "Heals", 5);
+    HealItem healRock2 = new HealItem("Rock", "Heals", 5);
+    HealItem superHealRock = new HealItem("Rock", "Heals", 20);
+    System.out.println("Does rock equal healRock? (false): " + rock.equals(healRock));
+    System.out.println("Does healRock equal healRock2? (true): " + healRock.equals(healRock2));
+    System.out.println("Does superHealRock equal healRock? (false): " + superHealRock.equals(healRock));
+    System.out.println("Does superHealRock equal rock? (false): " + superHealRock.equals(healRock));
+  }
 }

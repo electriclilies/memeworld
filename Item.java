@@ -1,3 +1,5 @@
+//mon dec 4, lily orth-smith added .equals methods
+
 public class Item {
   
   protected String name;
@@ -24,13 +26,23 @@ public class Item {
     description = d;
   }
   
+  public boolean equals(Item otherItem) {
+    boolean sameName = name.equals(otherItem.getName());
+    boolean sameDescription = description.equals(otherItem.getDescription());
+    return (sameName && sameDescription);
+  }
+  
   public String toString() {
     return name + ": " + description;
   }
   
   public static void main(String[] args) {
     Item rock = new Item("Rock", "Does nothing.");
-    System.out.println(rock);
+    Item rock2 = new Item("Rock", "Does nothing.");
+    System.out.println("rock: " + rock);
+    System.out.println("rock2: " + rock2);
+    System.out.println("Does rock equal rock2? (true): " + rock.equals(rock2));
+    
     System.out.println("Testing rock.getName()-->" + rock.getName());
     System.out.println("Testing rock.getDescription()-->" + rock.getDescription());
     System.out.println("Setting rock name to 'Pebble'");
@@ -39,5 +51,6 @@ public class Item {
     rock.setDescription("Can be thrown.");
     System.out.println(rock);
     
+    System.out.println("Does rock equal rock2? (false): " + rock.equals(rock2));
   }
 }

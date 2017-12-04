@@ -67,4 +67,8 @@ public class Weapon extends Item {
   public void setDamage(String dD) {
     damageDice = new Dice(dD);
   }
+  
+  public String toString() {
+     return super.toString();
+  }
 }
