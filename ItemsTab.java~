@@ -1,0 +1,15 @@
+import java.awt.*; 
+import javax.swing.*; 
+ 
+public class ItemsTab extends JPanel 
+{ 
+
+   public ItemsTab() 
+   { 
+      //setBackground (Color.green); 
+ 
+      JLabel l1 = new JLabel ("situation");
+      //replace situation with currentSituation.getDescription()
+      add (l1); 
+   } 
+} 
