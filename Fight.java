@@ -35,20 +35,22 @@ public class Fight {
     GameCharacter currentTurn = turns.dequeue();
     GameCharacter target;
     
-    if(targetIndex == -1) {
-      target = player;
-    } else {
-      target = enemies.get(targetIndex);
-    }
-    
-    if(enemies.contains(currentTurn) || action.equals("attack")) {
-      currentTurn.attack(target);
-    } else {
-      HealItem toUse = player.getItem(targetIndex);
-      toUse.use();
-    }
-    
     if(currentTurn.getCurrentHP() != 0) {
+      if(targetIndex == -1 || enemies.contains(currentTurn)) {
+        target = player;
+      } else {
+        target = enemies.get(targetIndex);
+      }
+      
+      if(enemies.contains(currentTurn) || action.equals("attack")) {
+        System.out.println("Attacking " + target.getName() + "...");
+        currentTurn.attack(target);
+      } else {
+        System.out.println(target.getName());
+        Item toUse = player.getItem(targetIndex);
+        player.useHealthItem(toUse);
+      }
+      
       turns.enqueue(currentTurn);
     }
   }
@@ -58,7 +60,35 @@ public class Fight {
    * */
   public void fight() {
     while(player.getCurrentHP() != 0 && turns.size() != 1) {
-      plyOneRound(action, targetIndex);
+      System.out.println("Player: " + player.getCurrentHP());
+      String e = "Enemies: [";
+      for(int i = 0; i < enemies.size(); i++) {
+        GameCharacter en = enemies.get(i);
+        if(enemies.indexOf(en) != enemies.size() - 1) {
+          e += en.getName() + ": " + en.getCurrentHP() + ", ";
+        } else {
+          e += en.getName() + ": " + en.getCurrentHP() + "]";
+        }
+      }
+      System.out.println(e);
+      playOneRound("attack", 0);
+    }
+    
+    if(player.getCurrentHP() == 0) {
+      System.out.println("Player: " + player.getCurrentHP());
+      String e = "Enemies: [";
+      for(int i = 0; i < enemies.size(); i++) {
+        GameCharacter en = enemies.get(i);
+        if(enemies.indexOf(en) != enemies.size() - 1) {
+          e += en.getName() + ": " + en.getCurrentHP() + ", ";
+        } else {
+          e += en.getName() + ": " + en.getCurrentHP() + "]";
+        }
+      }
+      System.out.println(e);
+      System.out.println("Game over");
+    } else {
+      System.out.println(player.getName() + " won!");
     }
   }
   
@@ -75,5 +105,14 @@ public class Fight {
       current.setHP(current.getMaxHP());
       turns.enqueue(current);
     }
+  }
+  
+  public static void main(String[] args) {
+    Vector<GameCharacter> enemies = new Vector<GameCharacter>();
+    enemies.add(new GameCharacter(100, new Weapon("Sickle", "None", 0.65, "5d40"), "Sample"));
+    Player player = new Player();
+    
+    Fight fight = new Fight(player, enemies);
+    fight.fight();
   }
 }
