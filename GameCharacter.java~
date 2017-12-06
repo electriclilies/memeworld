@@ -9,19 +9,16 @@ public class GameCharacter {
   protected int currentHP;
   protected int maxHP;
   protected Weapon weapon;
-  protected String name;
   
   /**
    * Creates a new game character
    * @param hp the maximum hp of the character
    * @param w the weapon of the character
-   * @param n the name
    * */
-  public GameCharacter(int hp, Weapon w, String n) {
+  public GameCharacter(int hp, Weapon w) {
     maxHP = hp;
     currentHP = maxHP;
     weapon = w;
-    name = n;
   }
   
   
@@ -60,14 +57,6 @@ public class GameCharacter {
    * */
   public Weapon getWeapon() {
     return weapon;
-  }
-  
-  /**
-   * Returns the character's name
-   * @return the name
-   * */
-  public String getName() {
-    return name;
   }
   
   /**
@@ -111,14 +100,6 @@ public class GameCharacter {
    * */
   public void setWeapon(Weapon w) {
     weapon = w;
-  }
-  
-  /**
-   * Sets the character's name
-   * @param n the name
-   * */
-  public void setName(String n) {
-    name = n;
   }
   
   public String toString() {
