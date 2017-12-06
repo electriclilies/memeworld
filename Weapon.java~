@@ -1,0 +1,43 @@
+/**
+ * Weapon.java
+ * @author Emma Shumadine
+ * */
+
+import java.util.Random;
+
+public class Weapon extends Item {
+  private int hitRate;
+  private Dice damageDice;
+  private static Random toRoll = new Random();
+  
+  public Weapon(String n, String desc, double hR, String dD) {
+    super(n, desc);
+    hitRate = (int)(100*hR);
+    damageDice = new Dice(dD);
+  }
+  
+  public int use() {
+    int hit = toRoll.nextInt();
+    if(hit < hitRate) {
+      return damageDice.roll();
+    } else {
+      return -1;
+    }
+  }
+  
+  public double getHitRate() {
+    return Integer.doubleValue(hitRate)/100;
+  }
+  
+  public Dice getDamage() {
+    return damageDice;
+  }
+  
+  public void setHitRate(double hR) {
+    hitRate = (int)(100*hR);
+  }
+  
+  public void setDamage(String dD) {
+    damageDice = new Dice(dD);
+  }
+}

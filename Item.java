@@ -32,6 +32,10 @@ public class Item {
     return (sameName && sameDescription);
   }
   
+  public int getHp() {
+    return 0;
+  }
+  
   public String toString() {
     return name + ": " + description;
   }

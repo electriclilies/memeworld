@@ -1,6 +1,5 @@
-public Class Situation {
+public class Situation {
 
-   String 
-   public situation(String hint, String description) {
+   public Situation(String hint, String description) {
    }
 }

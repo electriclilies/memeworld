@@ -4,7 +4,7 @@ public class Player extends GameCharacter {
 
    //CHANGE THESE DURING GAME DESIGN
    final static private int playerHp = 200; 
-   final static private Weapon defaultWeapon = new Weapon("Stick", "A simple stick", 1.0, "3d10"); //change these values!
+   final static private Weapon defaultWeapon = new Weapon("Stick", "A simple stick", 0.9, "3d10"); //change these values!
    final static private int maxInventorySize = 10;
    final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten.", 5);
    
@@ -12,7 +12,7 @@ public class Player extends GameCharacter {
    private int lastItemIndex;
    
    public Player() {
-      super(playerHp, defaultWeapon);
+      super(playerHp, defaultWeapon, "Player");
       inventory = new Item[maxInventorySize];
       lastItemIndex = 0;
       inventory[lastItemIndex] = firstItem;
@@ -63,7 +63,7 @@ public class Player extends GameCharacter {
    }
    
    
-   public void useHealthItem(HealItem itemToUse) throws NoSuchElementException {
+   public void useHealthItem(Item itemToUse) throws NoSuchElementException {
       dropItem(itemToUse);
       currentHP += itemToUse.getHp();
    }
@@ -83,6 +83,10 @@ public class Player extends GameCharacter {
          }
       }
       return false;
+   }
+   
+   public Item getItem(int index) {
+     return inventory[index];
    }
    
    public String toString() {
