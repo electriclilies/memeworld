@@ -106,6 +106,14 @@ public class Fight {
       turns.enqueue(current);
     }
   }
+
+  /**
+   * Returns a vector containing all the enemies in the fight
+   * @return the enemies in the fight
+   */
+  public Vector<GameCharacter> getEnemies() {
+    return enemies;
+  }
   
   public static void main(String[] args) {
     Vector<GameCharacter> enemies = new Vector<GameCharacter>();
