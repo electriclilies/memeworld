@@ -148,5 +148,10 @@ public class Situation {
                 "a rainbow", 0.90, "1d6"), "Sample"));
         s1.addFight(new Fight(new Player(), enemies));
         System.out.println(s1.hasFight());
+        
+        Situation s2 = new Situation("Castle", "a second castle"); 
+        
+        System.out.println("Testing situation's .equals() method");
+        System.out.println("s1 equals s2? (true): " + s1.equals(s2));
     }
 }
