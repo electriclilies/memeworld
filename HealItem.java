@@ -30,6 +30,10 @@ public class HealItem extends Item {
   public String toString() {
     return super.toString() + " Heals " + hp + " hp.";
   }
+
+  public HealItem clone() {
+    return new HealItem(name, description, hp);
+  }
   
   public boolean equals(HealItem healItem) {
      return (super.equals(healItem) && (hp == healItem.getHp()));

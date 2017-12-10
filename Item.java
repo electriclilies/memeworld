@@ -31,6 +31,10 @@ public class Item {
     boolean sameDescription = description.equals(otherItem.getDescription());
     return (sameName && sameDescription);
   }
+
+  public Item clone() {
+    return new Item(name, description);
+  }
   
   public int getHp() {
     return 0;

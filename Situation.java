@@ -4,6 +4,7 @@
  */
 
 import java.util.Vector;
+import javafoundations.ArrayStack;
 
 public class Situation {
    private String name;
@@ -12,7 +13,7 @@ public class Situation {
    private Vector<String> requiredItems = new Vector<>();
    private Fight fight = null;
    private Vector<Item> items = new Vector<>(); 
-   private Vector<Item> pickedUp = new Vector<>();
+   private Vector<Item> originalItems = new Vector<>();
 
    /**
     * Creates a situation with no items, no required items, and no fight
@@ -26,16 +27,33 @@ public class Situation {
    }
    
    /**
-    * Creates a situation with no items, no required items, and no fight
+    * Creates a situation with no items and no fight
     * @param n the name
     * @param desc the description
+    * @param h the hint
     */
-   public Situation(String n, String desc, String h) {
-      name = n;
-      description = desc;
-      hint = h;
-   }
+   //public Situation(String n, String desc, String h) {
+   //   name = n;
+   //   description = desc;
+   //   hint = h;
+   //}
 
+    /**
+     * Creates a situation holding the specified items
+     * @param n the name
+     * @param desc the description
+     * @param i the items
+     */
+    public Situation(String n, String desc, Vector<Item> i) {
+       name = n;
+       description = desc;
+       items = i;
+       for(Item it: items) {
+           if(it.getClass() != Weapon.class) {
+               originalItems.add(it.clone());
+           }
+       }
+    }
 
     /**
      * Returns a Vector containing the items currently in the situation
@@ -66,9 +84,16 @@ public class Situation {
      * Removes an item from the situation
      * @param toRemove the item to remove
      */
-    public void removeItem(Item toRemove) { 
-        pickedUp.add(toRemove);
+    public void removeItem(Item toRemove) {
         items.remove(toRemove);
+    }
+
+    /**
+     * Sets the names of the required items for the situation
+     * @param itemNames the vector containing the names of the required items
+     */
+    public void setRequiredItems(Vector<String> itemNames) {
+        requiredItems = itemNames;
     }
 
     /**
@@ -97,10 +122,20 @@ public class Situation {
         if(hasFight()) {
             fight.respawn();
         }
-        for(Item i: pickedUp) { //could run into issues where if player drops an item and then picks it up, it'll get respawned
-            if(i.getClass() != Weapon.class) {
-                items.add(i);
+
+        ArrayStack<Item> w = new ArrayStack<>();
+        for(int i = 0; i < originalItems.size(); i++) {
+            if (items.get(i).getClass() == Weapon.class) {
+                w.push(items.get(i));
             }
+            if (i < items.size()) {
+                items.setElementAt(originalItems.get(i).clone(), i);
+            } else {
+                items.add(originalItems.get(i).clone());
+            }
+        }
+        while (!w.isEmpty()) {
+            items.add(w.pop());
         }
     }
 
@@ -124,9 +159,9 @@ public class Situation {
      * Returns the hint of the situation
      * @return the hint
      */
-    public String getHint() {
-      return hint; 
-    }
+    //public String getHint() {
+    //  return hint;
+    //}
 
     /**
      * Returns the fight in this situation. Null if none.
@@ -134,6 +169,22 @@ public class Situation {
      */
     public Fight getFight() {
         return fight;
+    }
+
+    /**
+     * Returns a vector of the respawnable items in the situation
+     * @return a vector of the respawnable items
+     */
+    public Vector<Item> getOriginalItems() {
+        return originalItems;
+    }
+
+    /**
+     * Returns a vector of the names of the required items for this situation
+     * @return a vector of the names of the required items
+     */
+    public Vector<String> getRequiredItems() {
+        return requiredItems;
     }
 
     /**
@@ -151,13 +202,22 @@ public class Situation {
     public void setDescription(String desc) {
         description = desc;
     }
+
+    /**
+     * Sets the items to be respawned in the situation
+     * @param i the items
+     */
+    public void setOriginalItems(Vector<Item> i) {
+        originalItems = i;
+    }
+
     /**
      * Sets the hint of the situation
      * @param h the hint
      */
-    public void setHint(String h) {
-         hint = h;
-    }
+    //public void setHint(String h) {
+    //     hint = h;
+    //}
 
     /**
      * Returns a string representation of the situation
