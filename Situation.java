@@ -8,9 +8,10 @@ import java.util.Vector;
 public class Situation {
    private String name;
    private String description;
+   private String hint;
    private Vector<String> requiredItems = new Vector<>();
    private Fight fight = null;
-   private Vector<Item> items = new Vector<>();
+   private Vector<Item> items = new Vector<>(); 
    private Vector<Item> pickedUp = new Vector<>();
 
    /**
@@ -21,7 +22,20 @@ public class Situation {
    public Situation(String n, String desc) {
       name = n;
       description = desc;
+      hint = "";
    }
+   
+   /**
+    * Creates a situation with no items, no required items, and no fight
+    * @param n the name
+    * @param desc the description
+    */
+   public Situation(String n, String desc, String h) {
+      name = n;
+      description = desc;
+      hint = h;
+   }
+
 
     /**
      * Returns a Vector containing the items currently in the situation
@@ -52,7 +66,7 @@ public class Situation {
      * Removes an item from the situation
      * @param toRemove the item to remove
      */
-    public void removeItem(Item toRemove) {
+    public void removeItem(Item toRemove) { 
         pickedUp.add(toRemove);
         items.remove(toRemove);
     }
@@ -83,7 +97,7 @@ public class Situation {
         if(hasFight()) {
             fight.respawn();
         }
-        for(Item i: pickedUp) {
+        for(Item i: pickedUp) { //could run into issues where if player drops an item and then picks it up, it'll get respawned
             if(i.getClass() != Weapon.class) {
                 items.add(i);
             }
@@ -104,6 +118,14 @@ public class Situation {
      */
     public String getDescription() {
         return description;
+    }
+    
+    /**
+     * Returns the hint of the situation
+     * @return the hint
+     */
+    public String getHint() {
+      return hint; 
     }
 
     /**
@@ -128,6 +150,13 @@ public class Situation {
      */
     public void setDescription(String desc) {
         description = desc;
+    }
+    /**
+     * Sets the hint of the situation
+     * @param h the hint
+     */
+    public void setHint(String h) {
+         hint = h;
     }
 
     /**

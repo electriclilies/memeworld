@@ -4,7 +4,8 @@ public class Map extends AdjListsGraph<Situation> {
    
    Situation currentSituation; 
    Situation lastSituation;
-   
+      
+
    public Map(Situation initialSituation) {
       super();
       this.addVertex(initialSituation);
