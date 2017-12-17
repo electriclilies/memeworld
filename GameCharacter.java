@@ -1,8 +1,6 @@
 /**
  * GameCharacter.java
- * @author Emma Shumadine
- * modifications: 
- * Lily Orth-Smith added toString() dec 4
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
 public class GameCharacter {

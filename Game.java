@@ -1,8 +1,11 @@
 /**
- * A class to play the game! by no means complete. 
+ * Game.java
  *
+ * Known bugs:
+ *    pickUpItem() does not properly remove the item from the current situation
  *
- */
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * */
 
 import java.util.*;
 
@@ -10,60 +13,105 @@ public class Game {
    
    private Player player;
    private Map myMap;
-   
+
+   /**
+    * Creates a game with the default map
+    */
    public Game() {
    player = new Player();
    myMap = makeMap1();
    }
-   
+
+   /**
+    * Creates a game with the specified map
+    * @param userMap the map to use for the game
+    */
    public Game(Map userMap) {
       player = new Player();
       myMap = userMap;
    }
 
+   /**
+    * Returns the player to the start of the map
+    */
    public void goToBeginning() {
       myMap.goToBeginning();
    }
-   
+
+   /**
+    * Moves the player to an adjacent situation given by the index in the adjacency array
+    * @param adjIndex the index in the adjacency array
+    */
    public void movePlayer(int adjIndex) {
       Situation[] adjacentSituations = myMap.getAdjArray();
       movePlayer(adjacentSituations[adjIndex]);
    }
-   
+
+   /**
+    * Moves the player to an adjacent situation
+    * @param adjSit the situation
+    */
    public void movePlayer(Situation adjSit) {
+
+      //check if the player has the required items to enter the situation
       if(!adjSit.getRequiredItems().isEmpty()) {
          int count = 0;
-         for (int i = 0; i < player.getInventory().length; i++) {
-            if (adjSit.getRequiredItems().contains(player.getInventory()[i])) {
+
+         for (Item i: adjSit.getRequiredItems()) {
+            if (player.hasItem(i)) {
                count++;
             }
          }
+
          if (count == adjSit.getRequiredItems().size()) {
             myMap.changeSituation(adjSit);
          } else {
             throw new IllegalMoveException();
          }
+
       } else {
          myMap.changeSituation(adjSit);
       }
    }
-   
+
+   /**
+    * Picks up an item from the current situation and puts it in the player's inventory
+    * @param item the item to pick up
+    */
    public void pickUpItem(Item item) {
       myMap.getCurrentSituation().removeItem(item);
       player.pickUpItem(item);
    }
-   
+
+   /**
+    * Picks up an weapon from the current situation and gives it to the player
+    * @param item the weapon to pick up
+    */
+   public void pickUpItem(Weapon item) {
+      myMap.getCurrentSituation().removeItem(item);
+      player.pickUpWeapon(item);
+   }
+
+   /**
+    * Removes the item from the player's inventory and drops it into the situation
+    * @param item the item to drop
+    */
   public void dropItem(Item item) {
       player.dropItem(item);
       myMap.getCurrentSituation().addItem(item);
    }
 
+   /**
+    * Returns true if the boss has been defeated, and false otherwise
+    * @return true if the boss has been defeated
+    */
    public boolean isOver() {
       return myMap.isCleared();
    }
    
    /**
     * Makes the map
+    * @return the map
     */
    public Map makeMap1() {
       // beginning
@@ -75,7 +123,7 @@ public class Game {
       // nyan cat room
 
       HealItem rainbowPopTart = new HealItem("A rainbow poptart", "It crosses your mind that this could be nyan cat poop, but as the rainbowy scent wafts "
-              + "towards you, you put the thought out of your mind.", 5);
+              + "towards you, you put the thought out of your mind. Heals 5 meme points.", 5);
       Vector<Item> dropNyan = new Vector<>();
       dropNyan.add(rainbowPopTart);
       dropNyan.add(rainbowPopTart.clone());
@@ -96,7 +144,7 @@ public class Game {
       // apple room
 
       Vector<Item> apples = new Vector<>();
-      Item apple = new HealItem("Apple", "A crunchy apple. Can be eaten.", 10);
+      Item apple = new HealItem("Apple", "A crunchy apple. Can be eaten. Heals 10 meme points.", 10);
       apples.add(apple);
       apples.add(apple.clone());
 
@@ -118,7 +166,7 @@ public class Game {
       // sickle room
 
       Vector<Item> grains = new Vector<>();
-      Item wheat = new HealItem("Wheat", "A grain of wheat.", 5);
+      Item wheat = new HealItem("Wheat", "A grain of wheat. Heals 5 meme points", 5);
       grains.add(wheat);
       grains.add(wheat.clone());
       Situation sickleRoom = new Situation("A wheat field", "Outside of the woods lies a large wheat field. It looks like someone was in the "
@@ -200,6 +248,10 @@ public class Game {
       return map;
    }
 
+   /**
+    * Returns a string representation of the player's current situation, health, and options
+    * @return a string representation of the player's current situation, health, and options
+    */
    public String toString() {
       LinkedList<Situation> adj = myMap.getAdjacent();
       String s = myMap.getCurrentSituation().toString() + "\nAdjacent rooms: ";
@@ -210,14 +262,29 @@ public class Game {
             s += sit.getName();
          }
       }
+      s += "\nCurrent Meme Points: " + player.getCurrentHP() + "/" + player.getMaxHP() + "\nInventory: [";
+      for(int i = 0; i < player.getInventory().length; i++) {
+         if(i != player.getInventory().length - 1) {
+            s += player.getInventory()[i] + ", ";
+         } else {
+            s += player.getInventory()[i] + "]";
+         }
+      }
+      s += "\nWeapon: " + player.getWeapon();
       return s;
    }
 
    public static void main(String[] args) {
       Game myGame = new Game();
-      System.out.println(myGame);
-      myGame.movePlayer(0);
-      System.out.println(myGame);
+      //System.out.println(myGame);
+      myGame.movePlayer(1);
+      myGame.pickUpItem(new HealItem("A rainbow poptart", "It crosses your mind that this could be nyan cat poop, but as the rainbowy scent wafts "
+              + "towards you, you put the thought out of your mind. Heals 5 meme points.", 5));
+      //System.out.println("\n" + myGame);
+      myGame.movePlayer(2);
+      //System.out.println("\n" + myGame);
+      myGame.pickUpItem(new Weapon("Sword", "A sharp sword. Hit Rate: 95%, 4d6 damage", 0.95, "4d6"));
+      //System.out.println("\n" + myGame);
    }
 
 }

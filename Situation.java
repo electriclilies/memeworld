@@ -1,6 +1,6 @@
 /**
  * Situation.java
- * @author Emma Shumadine
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  */
 
 import java.util.Vector;
@@ -214,5 +214,11 @@ public class Situation {
         
         System.out.println("Testing situation's .equals() method");
         System.out.println("s1 equals s2? (true): " + s1.equals(s2));
+
+        Item apple = new HealItem("Apple", "Test Apple", 5);
+        Situation testPickUp = new Situation("Test", "Situation");
+        testPickUp.addItem(apple);
+        testPickUp.removeItem(apple);
+        System.out.println(testPickUp);
     }
 }

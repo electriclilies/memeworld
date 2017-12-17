@@ -1,6 +1,6 @@
 /**
  * Fight.java
- * @author Emma Shumadine
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
 import java.util.Vector;

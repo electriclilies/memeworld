@@ -3,10 +3,15 @@ import java.util.*;
 public class Map extends AdjListsGraph<Situation> {
    
    private Situation currentSituation;
-   private Situation lastSituation;
+   private Situation lastSituation = null;
    private Situation beginning;
    private Situation bossRoom;
 
+   /**
+    * Creates a map with an initial situation and a boss room
+    * @param initialSituation the starting situation
+    * @param boss the boss room
+    */
    public Map(Situation initialSituation, Situation boss) {
       super();
       this.addVertex(initialSituation);
@@ -16,6 +21,10 @@ public class Map extends AdjListsGraph<Situation> {
       bossRoom = boss;
    }
 
+   /**
+    * Returns true if the boss has been defeated, and false otherwise
+    * @return true if the boss has been defeated
+    */
    public boolean isCleared() {
       for(GameCharacter enemy: bossRoom.getFight().getEnemies()) {
          if(enemy.getCurrentHP() != 0) {
@@ -25,8 +34,10 @@ public class Map extends AdjListsGraph<Situation> {
       return true;
    }
    
-   /** Changes lastSituation to currentSituation and currentSitatuion to newSituation, throws IllegalMoveException if newSituation is not an adjacent situation
-    *  @param newSituation situation to set currentSituation to
+   /**
+    * Changes lastSituation to currentSituation and currentSitatuion to newSituation, throws IllegalMoveException if newSituation is not an adjacent situation.
+    * Resets (respawns all enemies and heal items in) the situation that the player is leaving
+    * @param newSituation situation to set currentSituation to
     */
    public void changeSituation (Situation newSituation) throws IllegalMoveException {
       if (isAdjacent(newSituation)) {

@@ -8,33 +8,36 @@ public class HealItem extends Item {
     super(n, d);
     this.hp = hp;
   }
-  
+
+  /**
+   * Returns the HP of the item
+   * @return the HP of the item
+   */
   public int getHp() {
     return hp;
   }
-  
+
+  /**
+   * Sets the HP that the item heals
+   * @param hp the HP
+   */
   public void setHp(int hp) {
     this.hp = hp;
   }
-  
-//  public int use() {
-//    int temp = hp;
-//    hp = 0;
-//    return temp;
-//  }
-//  we should have the item be dropped from inventory after usage, instead of setting hp to 0.
-//  should be implemented in Player class instead.
-//  (in Player class)
-//  public void useHealItem(HealItem i) {remove i and add i.getHp() to health}
-  
-  public String toString() {
-    return super.toString() + " Heals " + hp + " meme points.";
-  }
 
+  /**
+   * Returns a new HealItem with the same name, description, and hp
+   * @return a cloned version of this HealItem
+   */
   public HealItem clone() {
     return new HealItem(name, description, hp);
   }
-  
+
+  /**
+   * Returns true if the items have the same name, description and hp
+   * @param healItem the item to be compared
+   * @return true if the items have the same name, description, and hp
+   */
   public boolean equals(HealItem healItem) {
      return (super.equals(healItem) && (hp == healItem.getHp()));
   }

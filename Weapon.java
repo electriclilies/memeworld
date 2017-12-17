@@ -1,9 +1,10 @@
 /**
  * Weapon.java
- * @author Emma Shumadine
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
 import java.util.Random;
+import java.util.Vector;
 
 public class Weapon extends Item {
   private int hitRate;
@@ -67,8 +68,14 @@ public class Weapon extends Item {
   public void setDamage(String dD) {
     damageDice = new Dice(dD);
   }
-  
-  public String toString() {
-     return super.toString();
+
+  public static void main(String[] args) {
+    Vector<Weapon> weapons = new Vector<>();
+    Weapon sword1 = new Weapon("Sword", "A sharp sword. Hit Rate: 95%, 4d6 damage", 0.95, "4d6");
+    Weapon sword2 = new Weapon("Sword", "A sharp sword. Hit Rate: 95%, 4d6 damage", 0.95, "4d6");
+    weapons.add(sword1);
+    weapons.add(sword2);
+    System.out.println(weapons.remove(sword1));
+    System.out.println(weapons);
   }
 }
