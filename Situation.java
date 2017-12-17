@@ -73,7 +73,12 @@ public class Situation {
      * @param toRemove the item to remove
      */
     public void removeItem(Item toRemove) {
-        items.remove(toRemove);
+        int index = -1;
+        for (int i = 0; i < items.size(); i++) {
+            if (toRemove.equals(items.get(i)))
+                index = i;
+        }
+        items.removeElementAt(index);
     }
 
     /**
@@ -113,11 +118,12 @@ public class Situation {
 
         ArrayStack<Item> w = new ArrayStack<>();
         for(int i = 0; i < originalItems.size(); i++) {
-            if (items.get(i).getClass() == Weapon.class) {
-                w.push(items.get(i));
-            }
             if (i < items.size()) {
-                items.setElementAt(originalItems.get(i).clone(), i);
+                if (items.get(i).getClass() == Weapon.class) {
+                    w.push(items.get(i));
+                } else {
+                    items.setElementAt(originalItems.get(i).clone(), i);
+                }
             } else {
                 items.add(originalItems.get(i).clone());
             }
@@ -218,7 +224,8 @@ public class Situation {
         Item apple = new HealItem("Apple", "Test Apple", 5);
         Situation testPickUp = new Situation("Test", "Situation");
         testPickUp.addItem(apple);
-        testPickUp.removeItem(apple);
+        System.out.println(testPickUp);
+        testPickUp.removeItem(new HealItem("Apple", "Test Apple", 5));
         System.out.println(testPickUp);
     }
 }

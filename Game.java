@@ -2,7 +2,7 @@
  * Game.java
  *
  * Known bugs:
- *    pickUpItem() does not properly remove the item from the current situation
+ *    none! :)
  *
  * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
@@ -276,15 +276,16 @@ public class Game {
 
    public static void main(String[] args) {
       Game myGame = new Game();
-      //System.out.println(myGame);
+      System.out.println(myGame);
       myGame.movePlayer(1);
       myGame.pickUpItem(new HealItem("A rainbow poptart", "It crosses your mind that this could be nyan cat poop, but as the rainbowy scent wafts "
               + "towards you, you put the thought out of your mind. Heals 5 meme points.", 5));
-      //System.out.println("\n" + myGame);
+      System.out.println("\n" + myGame);
       myGame.movePlayer(2);
-      //System.out.println("\n" + myGame);
-      myGame.pickUpItem(new Weapon("Sword", "A sharp sword. Hit Rate: 95%, 4d6 damage", 0.95, "4d6"));
-      //System.out.println("\n" + myGame);
+      System.out.println("\n" + myGame);
+      Weapon sword = new Weapon("Sword", "A sharp sword. Hit Rate: 95%, 4d6 damage", 0.95, "4d6");
+      myGame.pickUpItem(sword);
+      System.out.println("\n" + myGame);
    }
 
 }
