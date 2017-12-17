@@ -1,0 +1,13 @@
+Emma Shumadine, Rachel Zhang, and Lily Orth-Smith
+Labor plan
+12/6/17
+
+**These are not final and are rather fluid. Everyone has written at least one class themselves and has helped others work on their assigned classes.**
+
+Assigned classes:
+
+Emma - Fight, Weapon, Dice, GameCharacter, Situation
+
+Lily - Map, Player
+
+Rachel - Item, HealItem, GUI, Game

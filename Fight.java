@@ -7,9 +7,9 @@ import java.util.Vector;
 import javafoundations.LinkedQueue;
 
 public class Fight {
-  LinkedQueue<GameCharacter> turns = new LinkedQueue<GameCharacter>();
-  Vector<GameCharacter> enemies;
-  Player player;
+  private LinkedQueue<GameCharacter> turns = new LinkedQueue<GameCharacter>();
+  private Vector<GameCharacter> enemies;
+  private Player player;
   
   /**
    * Creates a Fight object with the specified player and enemies. Automatically enqueues all turns.
@@ -30,10 +30,12 @@ public class Fight {
    * Plays one turn of the fight
    * @param action the action for the character to take. Can be "attack" or "heal".
    * @param targetIndex the index of the target in its respective data structure. -1 if target is the player.
+   * @return the damage/healing done (-1 if the attack missed).
    * */
-  public void playOneRound(String action, int targetIndex) {
+  public int playOneRound(String action, int targetIndex) {
     GameCharacter currentTurn = turns.dequeue();
     GameCharacter target;
+    int result = 0;
     
     if(currentTurn.getCurrentHP() != 0) {
       if(targetIndex == -1 || enemies.contains(currentTurn)) {
@@ -44,15 +46,22 @@ public class Fight {
       
       if(enemies.contains(currentTurn) || action.equals("attack")) {
         System.out.println("Attacking " + target.getName() + "...");
-        currentTurn.attack(target);
+        result = currentTurn.attack(target);
+        if(result != -1) {
+          System.out.println(result + " damage!");
+        } else {
+          System.out.println("Miss!");
+        }
       } else {
         System.out.println(target.getName());
         Item toUse = player.getItem(targetIndex);
+        result = toUse.getHp();
         player.useHealthItem(toUse);
       }
       
       turns.enqueue(currentTurn);
     }
+    return result;
   }
   
   /**

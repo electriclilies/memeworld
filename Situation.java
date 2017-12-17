@@ -10,9 +10,9 @@ public class Situation {
    private String name;
    private String description;
    private String hint;
-   private Vector<String> requiredItems = new Vector<>();
+   private Vector<Item> requiredItems = new Vector<>();
    private Fight fight = null;
-   private Vector<Item> items = new Vector<>(); 
+   private Vector<Item> items = new Vector<>();
    private Vector<Item> originalItems = new Vector<>();
 
    /**
@@ -25,18 +25,6 @@ public class Situation {
       description = desc;
       hint = "";
    }
-   
-   /**
-    * Creates a situation with no items and no fight
-    * @param n the name
-    * @param desc the description
-    * @param h the hint
-    */
-   //public Situation(String n, String desc, String h) {
-   //   name = n;
-   //   description = desc;
-   //   hint = h;
-   //}
 
     /**
      * Creates a situation holding the specified items
@@ -90,10 +78,10 @@ public class Situation {
 
     /**
      * Sets the names of the required items for the situation
-     * @param itemNames the vector containing the names of the required items
+     * @param items the vector containing the required items
      */
-    public void setRequiredItems(Vector<String> itemNames) {
-        requiredItems = itemNames;
+    public void setRequiredItems(Vector<Item> items) {
+        requiredItems = items;
     }
 
     /**
@@ -154,14 +142,6 @@ public class Situation {
     public String getDescription() {
         return description;
     }
-    
-    /**
-     * Returns the hint of the situation
-     * @return the hint
-     */
-    //public String getHint() {
-    //  return hint;
-    //}
 
     /**
      * Returns the fight in this situation. Null if none.
@@ -183,7 +163,7 @@ public class Situation {
      * Returns a vector of the names of the required items for this situation
      * @return a vector of the names of the required items
      */
-    public Vector<String> getRequiredItems() {
+    public Vector<Item> getRequiredItems() {
         return requiredItems;
     }
 
@@ -212,19 +192,11 @@ public class Situation {
     }
 
     /**
-     * Sets the hint of the situation
-     * @param h the hint
-     */
-    //public void setHint(String h) {
-    //     hint = h;
-    //}
-
-    /**
      * Returns a string representation of the situation
      * @return a string representation of the situation
      */
     public String toString() {
-        return name + ": " + description + "\n items: " + items;
+        return name + ": " + description + "\nItems: " + items;
     }
 
     public static void main(String[] args) {

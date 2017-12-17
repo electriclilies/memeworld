@@ -28,7 +28,7 @@ public class HealItem extends Item {
 //  public void useHealItem(HealItem i) {remove i and add i.getHp() to health}
   
   public String toString() {
-    return super.toString() + " Heals " + hp + " hp.";
+    return super.toString() + " Heals " + hp + " meme points.";
   }
 
   public HealItem clone() {

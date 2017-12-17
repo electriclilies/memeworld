@@ -2,14 +2,27 @@ import java.util.*;
 //import java.io.*;
 public class Map extends AdjListsGraph<Situation> {
    
-   Situation currentSituation; 
-   Situation lastSituation;
-      
+   private Situation currentSituation;
+   private Situation lastSituation;
+   private Situation beginning;
+   private Situation bossRoom;
 
-   public Map(Situation initialSituation) {
+   public Map(Situation initialSituation, Situation boss) {
       super();
       this.addVertex(initialSituation);
-      currentSituation = initialSituation; 
+      this.addVertex(boss);
+      currentSituation = initialSituation;
+      beginning = initialSituation;
+      bossRoom = boss;
+   }
+
+   public boolean isCleared() {
+      for(GameCharacter enemy: bossRoom.getFight().getEnemies()) {
+         if(enemy.getCurrentHP() != 0) {
+            return false;
+         }
+      }
+      return true;
    }
    
    /** Changes lastSituation to currentSituation and currentSitatuion to newSituation, throws IllegalMoveException if newSituation is not an adjacent situation
@@ -18,12 +31,22 @@ public class Map extends AdjListsGraph<Situation> {
    public void changeSituation (Situation newSituation) throws IllegalMoveException {
       if (isAdjacent(newSituation)) {
          lastSituation = currentSituation;
-         currentSituation = newSituation; 
+         currentSituation = newSituation;
+         if(!lastSituation.equals(bossRoom)) {
+            lastSituation.reset();
+         }
       } else {
-         throw new IllegalMoveException(); 
+         throw new IllegalMoveException();
       }
    }
-   
+
+   /**
+    * Sets the current situation to the beginning
+    */
+   public void goToBeginning() {
+      currentSituation = beginning;
+   }
+
    /** Gets the situation in the adjacent situations at index adjacencyIndex, and changes to that
     *  @param adjacencyIndex index in the array of ADJACENT situations (NOT the index of the vertex in the graph)
     */
@@ -103,7 +126,15 @@ public class Map extends AdjListsGraph<Situation> {
       
       return descriptions; 
   }
-   
+
+   /**
+    * Returns the situation containing the boss fight
+    * @return the situation containing the boss fight
+    */
+  public Situation getBossRoom() {
+      return bossRoom;
+  }
+
    /** Gets the current situation
     * @return the current situation 
     */
@@ -118,6 +149,7 @@ public class Map extends AdjListsGraph<Situation> {
    public Situation getLastSituation() {
       return lastSituation; 
    }
+
    /** Provides a String representation of the Map Object
     * @return a String representation of the Map
     */
@@ -158,11 +190,10 @@ public class Map extends AdjListsGraph<Situation> {
       Situation s3 = new Situation("s3", "the 3 situation"); 
       Situation s4 = new Situation("s4", "the 4 situation"); 
       
-      Map myMap = new Map(s1);
+      Map myMap = new Map(s1, s4);
       System.out.println(myMap); 
       myMap.addVertex(s2);
       myMap.addVertex(s3);
-      myMap.addVertex(s4); 
       
       System.out.println(); 
       /*

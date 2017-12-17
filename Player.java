@@ -3,10 +3,10 @@ import java.util.NoSuchElementException;
 public class Player extends GameCharacter { 
 
    //CHANGE THESE DURING GAME DESIGN
-   final static private int playerHp = 200; 
-   final static private Weapon defaultWeapon = new Weapon("Stick", "A simple stick", 0.9, "3d10"); //change these values!
-   final static private int maxInventorySize = 10;
-   final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten.", 5);
+   final static private int playerHp = 100;
+   final static private Weapon defaultWeapon = new Weapon("Stick", "A simple stick. Hit Rate: 90%, 1d4 damage", 0.9, "1d4");
+   final static private int maxInventorySize = 8;
+   final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten.", 10);
    
    private Item[] inventory;
    private int lastItemIndex;
@@ -63,9 +63,10 @@ public class Player extends GameCharacter {
    }
    
    
-   public void useHealthItem(Item itemToUse) throws NoSuchElementException {
+   public int useHealthItem(Item itemToUse) throws NoSuchElementException {
       dropItem(itemToUse);
       currentHP += itemToUse.getHp();
+      return itemToUse.getHp();
    }
    
    public Item[] getInventory() {

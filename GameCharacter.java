@@ -72,7 +72,7 @@ public class GameCharacter {
   
   /**
    * Sets the maximum HP of the character
-   * @param the maximum hp
+   * @param hp the maximum hp
    * */
   public void setMaxHP(int hp) {
     maxHP = hp;
@@ -103,6 +103,14 @@ public class GameCharacter {
     } else {
       currentHP = hp;
     }
+  }
+
+  /**
+   * Clones the character
+   * @return a cloned version of the character
+   */
+  public GameCharacter clone() {
+    return new GameCharacter(maxHP, weapon, name);
   }
   
   /**
