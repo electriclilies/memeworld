@@ -1,9 +1,19 @@
-//mon dec 4, lily orth-smith added .equals methods
+/**
+ * HealItem.java
+ * This class represents an item that is capable of healing the player
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang (primary)
+ */
 
 public class HealItem extends Item {
   
   private int hp;
-  
+
+  /**
+   * Creates a healing item
+   * @param n the name
+   * @param d the description
+   * @param hp the amount that the item heals
+   */
   public HealItem(String n, String d, int hp) {
     super(n, d);
     this.hp = hp;

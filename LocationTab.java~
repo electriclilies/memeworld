@@ -1,7 +1,7 @@
 import java.awt.*; 
 import javax.swing.*; 
  
-public class AboutTab extends JPanel 
+public class LocationTab extends JPanel 
 { 
 
    public LocationTab() 
@@ -11,5 +11,7 @@ public class AboutTab extends JPanel
       JLabel l1 = new JLabel ("situation");
       //replace situation with currentSituation.getDescription()
       add (l1); 
+      
+      //text input from user to move?
    } 
 } 

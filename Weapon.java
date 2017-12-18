@@ -1,6 +1,7 @@
 /**
  * Weapon.java
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * This class represents a weapon with a hit rate out of 100% and damage determined using D&D-style multi-sided dice.
+ * @author Emma Shumadine (primary), Lily Orth-Smith, Rachel Zhang
  * */
 
 import java.util.Random;
@@ -23,6 +24,7 @@ public class Weapon extends Item {
     hitRate = (int)(100*hR);
     damageDice = new Dice(dD);
   }
+  
   
   /**
    * Uses the weapon. Returns -1 if the weapon misses and the weapon's damage otherwise.
@@ -68,6 +70,8 @@ public class Weapon extends Item {
   public void setDamage(String dD) {
     damageDice = new Dice(dD);
   }
+
+
 
   public static void main(String[] args) {
     Vector<Weapon> weapons = new Vector<>();

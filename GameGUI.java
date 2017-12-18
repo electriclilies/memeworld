@@ -1,5 +1,13 @@
-import javax.swing.*; 
+/**
+ * GameGUI.java
+ * Runs the full GUI for the game
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang (primary)
+ */
+
+import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
  
 public class GameGUI 
 { 
@@ -9,12 +17,13 @@ public class GameGUI
       JFrame frame = new JFrame ("Layout Manager Demo"); 
       frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE); 
 
-      //new game g; pass g as a parameter for all 3
+      Game g = new Game();
       JTabbedPane tp = new JTabbedPane(); 
-      tp.addTab ("Current Location", new LocationTab()); 
-      tp.addTab ("Character Info", new InfoTab()); 
-      tp.addTab ("Pick up Items", new ItemsTab()); 
-      tp.setPreferredSize(new Dimension(900, 600));
+      tp.addTab ("Current Location", new LocationTab(g)); 
+      tp.addTab ("Character Info", new InfoTab(g)); 
+      tp.addTab ("Pick up Items", new ItemsTab(g)); 
+      tp.setPreferredSize(new Dimension(700, 200));
+
 
  
       frame.getContentPane().add(tp); 

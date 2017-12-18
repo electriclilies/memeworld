@@ -8,8 +8,9 @@ public class ItemsTab extends JPanel
    { 
       //setBackground (Color.green); 
  
-      JLabel l1 = new JLabel ("situation");
-      //replace situation with currentSituation.getDescription()
+      JLabel l1 = new JLabel ("current items"); //replace with currentSituation.getItem().toString()
       add (l1); 
+      
+     //same as character info tab, have a drop menu and then buttons
    } 
 } 

@@ -1,6 +1,6 @@
 /**
  * Dice.java
- * This class offers methods for D&D dice
+ * This class offers methods for D&D-style dice.
  * @author Emma Shumadine
  * */
 

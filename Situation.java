@@ -1,6 +1,7 @@
 /**
  * Situation.java
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * This class represents a single situation.location in the game. Can contain items and/or a fight.
+ * @author Emma Shumadine (primary), Lily Orth-Smith, Rachel Zhang
  */
 
 import java.util.Vector;

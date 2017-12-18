@@ -1,5 +1,6 @@
 /**
  * Item.java
+ * Represents an item with a name and description.
  * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
@@ -76,15 +77,32 @@ public class Item {
   public int getHp() {
     return 0;
   }
+  
+  /**
+   * Returns the hit rate of the item (0 if it is not a Weapon)
+   * @return the hit rate of the item
+   */
+  public double getHitRate() {
+    return 0;
+  }
+
+  /**
+   * Uses the item and returns the result (automatically 0 if the item has no use)
+   * @return the result of the use
+   */
+  public int use(){
+    return 0;
+  }
 
   /**
    * Returns a string representation of the item
    * @return a string representation of the item
    */
   public String toString() {
-    return name + ": " + description;
+    return name;
   }
   
+
   public static void main(String[] args) {
     Item rock = new Item("Rock", "Does nothing.");
     Item rock2 = new Item("Rock", "Does nothing.");

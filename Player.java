@@ -1,6 +1,8 @@
 /**
  * Player.java
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * This class represents a player character. The player's health, inventory size, and starting items are predetermined.
+ * The player can only hold one weapon at a time, and this weapon does not take up an inventory spot.
+ * @author Emma Shumadine, Lily Orth-Smith (primary), Rachel Zhang
  * */
 
 import java.util.NoSuchElementException;
@@ -8,9 +10,9 @@ import java.util.NoSuchElementException;
 public class Player extends GameCharacter { 
 
    final static private int playerHp = 100;
-   final static private Weapon defaultWeapon = new Weapon("Stick", "A simple stick. Hit Rate: 90%, 1d4 damage", 0.9, "1d4");
+   final static private Item defaultWeapon = new Weapon("Stick", "A simple stick. Hit Rate: 90%, 1d4 damage", 0.9, "1d4");
    final static private int maxInventorySize = 8;
-   final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten.", 10);
+   final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten. Heals 10 HP.", 10);
 
    private Item[] inventory;
    private int lastItemIndex;
@@ -23,6 +25,8 @@ public class Player extends GameCharacter {
       inventory = new Item[maxInventorySize];
       lastItemIndex = 0;
       inventory[lastItemIndex] = firstItem;
+      lastItemIndex++;
+      inventory[lastItemIndex] = defaultWeapon;
       
    }
 
@@ -32,13 +36,21 @@ public class Player extends GameCharacter {
     * @throws FullInventoryException if the inventory is full
     */
    public void pickUpItem(Item newItem) throws FullInventoryException {
-      try {
+     if (lastItemIndex >= maxInventorySize - 1) {
+       throw new FullInventoryException();
+     }
+       
          //does make changes even if error is thrown? 
          inventory[lastItemIndex+1] = newItem;
          lastItemIndex++; 
-      } catch (IndexOutOfBoundsException e) {
-         throw new FullInventoryException();
-      }
+   }
+
+    /**
+     * Returns true if the player's inventory is full
+     * @return true if the player's inventory is full
+     */
+   public boolean inventoryIsFull() {
+       return lastItemIndex >= maxInventorySize - 1;
    }
 
    /**
@@ -46,8 +58,8 @@ public class Player extends GameCharacter {
     * @param weaponToPickUp the weapon to be switched
     * @return the weapon the player was previously using
     */
-   public Weapon pickUpWeapon(Weapon weaponToPickUp) {
-      Weapon savedWeapon = weapon;
+   public Item pickUpWeapon(Item weaponToPickUp) {
+      Item savedWeapon = weapon;
       weapon = weaponToPickUp;
       return savedWeapon;
    }
@@ -96,9 +108,17 @@ public class Player extends GameCharacter {
     * @throws NoSuchElementException if the item doesn't exist in the player's inventory
     */
    public int useHealthItem(Item itemToUse) throws NoSuchElementException {
-      dropItem(itemToUse);
-      currentHP += itemToUse.getHp();
-      return itemToUse.getHp();
+     if (itemToUse.getHp() != 0)
+       dropItem(itemToUse);
+     if ((currentHP + itemToUse.getHp()) < playerHp) {
+     currentHP += itemToUse.getHp();
+     return itemToUse.getHp();
+     }
+     else {
+       int diff = playerHp - currentHP;
+       currentHP = playerHp;
+       return diff;
+     }
    }
 
    /**
@@ -139,6 +159,15 @@ public class Player extends GameCharacter {
    public Item getItem(int index) {
      return inventory[index];
    }
+   
+  /**
+   * Returns the index of the last item (-1 if empty)
+   * @return the index of the last item
+   */
+  public int getLastItemIndex() {
+    return lastItemIndex;
+  }
+  
 
    /**
     * Returns a string representation of the player

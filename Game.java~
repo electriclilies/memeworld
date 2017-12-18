@@ -1,17 +1,13 @@
 /**
  * Game.java
  *
- * This class provides methods with which to run the game. The map is predetermined.
- *
  * Known bugs:
- *      The fight goes an extra round after the enemies are defeated
+ *    none! :)
  *
  * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
 import java.util.*;
-import javax.swing.*;
-import java.awt.*;
 
 public class Game {
    
@@ -77,53 +73,33 @@ public class Game {
          myMap.changeSituation(adjSit);
       }
    }
-   
 
    /**
     * Picks up an item from the current situation and puts it in the player's inventory
     * @param item the item to pick up
     */
-   public void pickUpItem(Item item) throws FullInventoryException{
-     if(!player.inventoryIsFull()){
-       myMap.getCurrentSituation().removeItem(item);
-       double hitRate = item.getHitRate();
-       if (hitRate == 0) {
-         player.pickUpItem(item);
-       }
-       else { //item is a weapon
-         player.pickUpItem(item);
-         Item drop = player.pickUpWeapon(item);
-         dropItem(drop);
-         
-       }
-     }
+   public void pickUpItem(Item item) {
+      myMap.getCurrentSituation().removeItem(item);
+      player.pickUpItem(item);
    }
 
+   /**
+    * Picks up an weapon from the current situation and gives it to the player
+    * @param item the weapon to pick up
+    */
+   public void pickUpItem(Weapon item) {
+      myMap.getCurrentSituation().removeItem(item);
+      player.pickUpWeapon(item);
+   }
 
    /**
     * Removes the item from the player's inventory and drops it into the situation
     * @param item the item to drop
     */
   public void dropItem(Item item) {
-    if (!item.equals(player.getWeapon()))
       player.dropItem(item);
       myMap.getCurrentSituation().addItem(item);
    }
-
-    /**
-     * Uses an item on the player (if it is a health item) and returns a string describing the result
-     * @param item the item to use
-     * @return a string describing the result
-     */
-  public String useItem(Item item) {
-    int healed = player.useHealthItem(item);
-    int HP = item.getHp();
-    if (HP != 0)
-    return "Used health item. Healed " + Integer.toString(healed) + " HP.";
-    else
-      return "Can't use this item.";
-  }
-
 
    /**
     * Returns true if the boss has been defeated, and false otherwise
@@ -132,199 +108,6 @@ public class Game {
    public boolean isOver() {
       return myMap.isCleared();
    }
-
-
-    /**
-     * Returns the description of the current situation
-     * @return the description
-     */
-    public String getCurrentDescription() {
-     return myMap.getCurrentSituation().getDescription();
-   }
-   
-   public String[] getAdjNames() {
-     String[] names = myMap.getAdjNames();
-     String[] options = new String[names.length + 1];
-     options[0] = "...";
-     for (int i = 1; i < options.length; i++) {
-       options[i] = names[i-1];
-     }
-     return options;
-   }
-
-    /**
-     * Returns the current health of the player as a string status message
-     * @return the current health of the player as a string status message
-     */
-     public String getPlayerHealth() {
-     String s =  "Current Meme Points: ";
-     s+= Integer.toString(player.getCurrentHP());
-     s+= "/";
-     s+= Integer.toString(player.getMaxHP());
-     return s;
-   }
-
-    /**
-     * Determines and returns the color to be associated with the player's current hp, based on the current health
-     * @return the color to be associated with the player's hp
-     */
-     public Color getHealthColor() {
-       int b = 66;
-       int r = 244 - (player.getCurrentHP());
-       int g = 74 + (player.getCurrentHP());
-       System.out.println(r + " " + g + " " + b);
-       return new Color(r, g, b);
-     }
-
-
-    /**
-     * Returns a Vector containing the items in the current situation
-     * @return a vector containing the items in the current situation
-     */
-    public Vector<Item> getRoomItems() {
-     Vector<Item> temp = myMap.getCurrentSituation().getItems();
-     return temp;
-     
-   }
-
-    /**
-     * Returns the player's inventory as a vector
-     * @return the player's inventory as a vector
-     */
-   public Vector<Item> getInventory() {
-     Vector<Item> inventory = new Vector<Item>();
-     Item[] temp = player.getInventory();
-     for (int i = 0; i < player.getLastItemIndex() +1; i++)
-       inventory.add(temp[i]);
-     return inventory;
-   }
-
-    /**
-     * Returns the player's current weapon as a string
-     * @return the player's current weapon as a string
-     */
-   public String getWeapon() {
-     return "Current Weapon: " + player.getWeapon().toString();
-   }
-
-    /**
-     * Returns true if the current situation contains a fight
-     * @return true if the current situation contains a fight
-     */
-   public boolean hasFight() {
-     return myMap.getCurrentSituation().hasFight();
-   }
-
-    /**
-     * Returns a vector containing the names of the enemies in the current situation's fight
-     * @return a vector containing the names of the enemies
-     */
-   public Vector<String> getEnemyNames() {
-     Vector<String> enemyNames = new Vector<String>();
-     Vector<GameCharacter> enemies = myMap.getCurrentSituation().getFight().getEnemies();
-     for (int i = 0; i < enemies.size(); i++)
-       enemyNames.add(enemies.get(i).getName());
-
-     return enemyNames;
-   }
-
-    /**
-     * Returns a vector containing the enemies in the current situation's fight
-     * @return a vector containing the enemies
-     */
-   public Vector<GameCharacter> getEnemies() {
-     return myMap.getCurrentSituation().getFight().getEnemies();
-   }
-
-    /**
-     * Returns a string describing the current state of the current situation's fight
-     * @return a string describing the current state of the fight
-     */
-   public String currentFightState() {
-     String p = "";
-     p += "Player HP: " + Integer.toString(player.getCurrentHP());
-     Vector<GameCharacter> enemies = myMap.getCurrentSituation().getFight().getEnemies();
-     String e = "Enemies: [";
-      for(int i = 0; i < enemies.size(); i++) {
-        GameCharacter en = enemies.get(i);
-        if(enemies.indexOf(en) != enemies.size() - 1) {
-          e += en.getName() + ": " + en.getCurrentHP() + ", ";
-        } else {
-          e += en.getName() + ": " + en.getCurrentHP() + "]";
-        }
-      }
-      return p + "\n" +e;
-   }
-
-    /**
-     * Runs one round of the current situation's fight
-     * @param action the action to be taken ("heal" or "attack")
-     * @param targetIndex the index of the target in its respective data structure (-1 if it's the player)
-     * @return A string describing the results of the round
-     */
-   public String fightOneRound(String action, int targetIndex){
-     while (!myMap.getCurrentSituation().getFight().isPlayersTurn()){
-       myMap.getCurrentSituation().getFight().playOneRound(action, targetIndex);
-     }
-     int result = myMap.getCurrentSituation().getFight().playOneRound(action, targetIndex);
-     if (action.equals("attack")) {
-       if (result == -1)
-         return "Miss!";
-       else
-         return Integer.toString(result) + " damage!";
-     }
-     else
-          return Integer.toString(result) + " healed!";
-     
-   }
-
-    /**
-     * Runs the current situation's fight using user input provided by a GUI
-     * @param message the message to be displayed to the player
-     * @return a string describing the results of one round of the fight
-     */
-    public String fight(String message) {
-    
-     Object[] options = {"Attack","Heal"};
-     String title = "Fight!! ";
-     for (int i = 0; i < getEnemyNames().size()-1; i++)
-        title += getEnemyNames().get(i) + " and ";
-     title+= getEnemyNames().get(getEnemyNames().size()-1);
-     int choice = JOptionPane.showOptionDialog(null, message, 
-    title, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]); 
-     if (choice == 0) {
-       JComboBox enemyCombo = new JComboBox(getEnemyNames());
-       JOptionPane.showMessageDialog(null, enemyCombo, "Select the enemy to attack", JOptionPane.QUESTION_MESSAGE);
-       return fightOneRound("attack", enemyCombo.getSelectedIndex()) + "\n" + currentFightState();
-     }
-     else if (choice == 1) {
-       JComboBox healCombo = new JComboBox(getInventory());
-       JOptionPane.showMessageDialog(null, healCombo, "Choose an item to heal with", JOptionPane.QUESTION_MESSAGE);
-       return fightOneRound("heal", healCombo.getSelectedIndex()) + "\n" + currentFightState();
-     }
-     else
-       return "";
-  }
-
-    /**
-     * Runs the entirety of the fight using user input provided by a GUI
-     */
-    public void startFight() {
-      String fightString = currentFightState();
-      while (!myMap.getCurrentSituation().getFight().fightEnded()){
-        fightString = fight(fightString);
-      }
-      if (player.getCurrentHP() == 0) {
-      JOptionPane.showMessageDialog (null, "Game Over.");
-      myMap.goToBeginning();
-      }
-      else {
-        JOptionPane.showMessageDialog (null, "You won the fight! Congrats.");
-      }
-      myMap.getCurrentSituation().getFight().respawn();
-    }
-
-
    
    /**
     * Makes the map
@@ -352,9 +135,7 @@ public class Game {
       Vector<GameCharacter> manyNyanCats = new Vector<GameCharacter>();
 
       manyNyanCats.add(nyanCat);
-      GameCharacter nyanCat2 = nyanCat.clone();
-      nyanCat2.setName("Another Nyan Cat");
-      manyNyanCats.add(nyanCat2);
+      manyNyanCats.add(nyanCat.clone());
 
       Fight nyanCatFight = new Fight(player, manyNyanCats);
 
@@ -496,10 +277,6 @@ public class Game {
    public static void main(String[] args) {
       Game myGame = new Game();
       System.out.println(myGame);
-      Weapon smashBall = new Weapon("Smash Ball", "Final smaaaaaaash! Hit Rate: 1%, 10d100 damage", 0.01, "10d100");
-      myGame.pickUpItem(smashBall);
-      //Item Apple = new HealItem("Apple", "A crunchy apple. Can be eaten. Heals 10 HP.", 10);
-      //System.out.println(myGame.useItem(Apple));
       myGame.movePlayer(1);
       myGame.pickUpItem(new HealItem("A rainbow poptart", "It crosses your mind that this could be nyan cat poop, but as the rainbowy scent wafts "
               + "towards you, you put the thought out of your mind. Heals 5 meme points.", 5));

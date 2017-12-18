@@ -1,5 +1,13 @@
+/**
+ * Map.java
+ * This class uses a graph to represent a map that the player can move through. Contains the player's current situation,
+ * the last situation they visited, and the boss fight. Items and fights are respawned when the player leaves a situation.
+ * The map is marked as cleared if the boss is defeated.
+ * @author Emma Shumadine, Lily Orth-Smith (primary), Rachel Zhang
+ */
+
 import java.util.*;
-//import java.io.*;
+
 public class Map extends AdjListsGraph<Situation> {
    
    private Situation currentSituation;
@@ -175,26 +183,6 @@ public class Map extends AdjListsGraph<Situation> {
       return mapString; 
    }
    
-   //is there a way to do this without making addEdge throw errors too? 
-   /* 
-    * Graph is undirected so there can never be any arcs. So I am having them throw UnsupportedOperationExceptions
-    */ 
-   
-   /*
-   public void addArc(Situation s1, Situation s2) throws UnsupportedOperationException {
-      throw new UnsupportedOperationException(); 
-   }
-   
-   public void removeArc(Situation s1, Situation s2) throws UnsupportedOperationException {
-      throw new UnsupportedOperationException();
-   }
-   
-   public boolean isArc(Situation s1, Situation s2) throws UnsupportedOperationException {
-      throw new UnsupportedOperationException();
-   }
-   
-   */
-   
    public static void main (String[] args) {
       Situation s1 = new Situation("s1", "the first situation"); 
       Situation s2 = new Situation("s2", "the 2 situation"); 
@@ -206,26 +194,7 @@ public class Map extends AdjListsGraph<Situation> {
       myMap.addVertex(s2);
       myMap.addVertex(s3);
       
-      System.out.println(); 
-      /*
-      System.out.println("Checking that you can't do anything with arcs!"); 
-      try {
-         myMap.addArc(s1, s2); 
-      } catch (UnsupportedOperationException e) {
-         System.out.println("You tried to add an arc and couldn't, as expected"); 
-      }
-      
-      try {
-         myMap.removeArc(s1, s2); 
-      } catch (UnsupportedOperationException e) {
-         System.out.println("You tried to remove an arc and couldn't, as expected"); 
-      }
-      
-      try {
-         myMap.isArc(s1, s2); 
-      } catch (UnsupportedOperationException e) {
-         System.out.println("You tried check if there is an arc and couldn't, as expected"); 
-      }*/
+      System.out.println();
       
       myMap.addEdge(s1, s2); 
       myMap.addEdge(s2, s3); 

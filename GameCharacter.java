@@ -1,12 +1,13 @@
 /**
  * GameCharacter.java
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * This class represents a character with health and a weapon
+ * @author Emma Shumadine (primary), Lily Orth-Smith, Rachel Zhang
  * */
 
 public class GameCharacter {
   protected int currentHP;
   protected int maxHP;
-  protected Weapon weapon;
+  protected Item weapon;
   protected String name;
   
   /**
@@ -15,14 +16,13 @@ public class GameCharacter {
    * @param w the weapon of the character
    * @param n the name
    * */
-  public GameCharacter(int hp, Weapon w, String n) {
+  public GameCharacter(int hp, Item w, String n) {
     maxHP = hp;
     currentHP = maxHP;
     weapon = w;
     name = n;
   }
-  
-  
+
   /**
    * Attacks the target with the weapon. Returns -1 if the attack misses, and the damage of the attack otherwise.
    * @param target the target of the attack
@@ -56,7 +56,7 @@ public class GameCharacter {
    * Returns the character's weapon
    * @return the weapon
    * */
-  public Weapon getWeapon() {
+  public Item getWeapon() {
     return weapon;
   }
   

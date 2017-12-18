@@ -1,24 +1,25 @@
 /**
  * GameCharacter.java
- * @author Emma Shumadine
- * modifications: 
- * Lily Orth-Smith added toString() dec 4
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
 
 public class GameCharacter {
   protected int currentHP;
   protected int maxHP;
   protected Weapon weapon;
+  protected String name;
   
   /**
    * Creates a new game character
    * @param hp the maximum hp of the character
    * @param w the weapon of the character
+   * @param n the name
    * */
-  public GameCharacter(int hp, Weapon w) {
+  public GameCharacter(int hp, Weapon w, String n) {
     maxHP = hp;
     currentHP = maxHP;
     weapon = w;
+    name = n;
   }
   
   
@@ -60,8 +61,16 @@ public class GameCharacter {
   }
   
   /**
+   * Returns the character's name
+   * @return the name
+   * */
+  public String getName() {
+    return name;
+  }
+  
+  /**
    * Sets the maximum HP of the character
-   * @param the maximum hp
+   * @param hp the maximum hp
    * */
   public void setMaxHP(int hp) {
     maxHP = hp;
@@ -93,6 +102,14 @@ public class GameCharacter {
       currentHP = hp;
     }
   }
+
+  /**
+   * Clones the character
+   * @return a cloned version of the character
+   */
+  public GameCharacter clone() {
+    return new GameCharacter(maxHP, weapon, name);
+  }
   
   /**
    * Sets the character's weapon
@@ -100,6 +117,14 @@ public class GameCharacter {
    * */
   public void setWeapon(Weapon w) {
     weapon = w;
+  }
+  
+  /**
+   * Sets the character's name
+   * @param n the name
+   * */
+  public void setName(String n) {
+    name = n;
   }
   
   public String toString() {

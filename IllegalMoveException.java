@@ -1,6 +1,5 @@
-/* An execption for when someone tries to make an illegal move
- * Author: Lily Orth-Smith
- * Date: Dec 9
+/** An execption to be thrown when someone tries to make an illegal move
+ * @author Emma Shumadine, Lily Orth-Smith (primary), Rachel Zhang
  */
 
 public class IllegalMoveException extends RuntimeException {

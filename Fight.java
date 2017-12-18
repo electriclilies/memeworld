@@ -1,6 +1,7 @@
 /**
  * Fight.java
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * This class represents a turn-based fight.
+ * @author Emma Shumadine (primary), Lily Orth-Smith, Rachel Zhang
  * */
 
 import java.util.Vector;
@@ -44,7 +45,7 @@ public class Fight {
         target = enemies.get(targetIndex);
       }
       
-      if(enemies.contains(currentTurn) || action.equals("attack")) {
+      if(enemies.contains(currentTurn) || action.equals("attack")) { //attacking or enemy turn
         System.out.println("Attacking " + target.getName() + "...");
         result = currentTurn.attack(target);
         if(result != -1) {
@@ -52,7 +53,7 @@ public class Fight {
         } else {
           System.out.println("Miss!");
         }
-      } else {
+      } else { //player healing
         System.out.println(target.getName());
         Item toUse = player.getItem(targetIndex);
         result = toUse.getHp();
@@ -123,6 +124,29 @@ public class Fight {
   public Vector<GameCharacter> getEnemies() {
     return enemies;
   }
+
+  /**
+   * Determines if it is the player's turn currently
+   * @return true if it is the player's turn
+   */
+  public boolean isPlayersTurn() {
+    if (turns.first().getName().equals("Player"))
+      return true;
+    else
+      return false;
+  }
+
+  /**
+   * Determines whether the fight has ended
+   * @return true if the player has died or all of the enemies have been defeated
+   */
+  public boolean fightEnded() {
+    if(player.getCurrentHP() == 0 || turns.size() == 1)
+      return true;
+    else
+      return false;
+  }
+
   
   public static void main(String[] args) {
     Vector<GameCharacter> enemies = new Vector<GameCharacter>();
