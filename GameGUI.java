@@ -14,7 +14,7 @@ public class GameGUI
 
    public static void main (String[] args) 
    { 
-      JFrame frame = new JFrame ("Layout Manager Demo"); 
+      JFrame frame = new JFrame ("Memeworld");
       frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE); 
 
       Game g = new Game();
