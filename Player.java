@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 public class Player extends GameCharacter { 
 
    final static private int playerHp = 100;
-   final static private Item defaultWeapon = new Weapon("Stick", "A simple stick. Hit Rate: 90%, 1d4 damage", 0.9, "1d4");
+   final static private Item defaultWeapon = new Weapon("Stick", "A simple stick. Hit Rate: 97%, 1d6 damage", 0.97, "1d6");
    final static private int maxInventorySize = 8;
    final static Item firstItem = new HealItem("Apple", "A crunchy apple. Can be eaten. Heals 10 HP.", 10);
 

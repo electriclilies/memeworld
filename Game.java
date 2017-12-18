@@ -5,6 +5,7 @@
  *
  * Known bugs:
  *      The fight goes an extra round after the enemies are defeated
+ *      Clicking too fast can break the game (seems to be a problem with the mouse action listener
  *
  * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
  * */
@@ -334,7 +335,7 @@ public class Game {
       // beginning
 
       Situation beginning = new Situation("First Room", "You are in a small, dark room.");
-      Weapon smashBall = new Weapon("Smash Ball", "Final smaaaaaaash! Hit Rate: 1%, 10d100 damage", 0.01, "10d100");
+      Weapon smashBall = new Weapon("Smash Ball", "Final smaaaaaaash! Hit Rate: 0.1%, 10d100 damage", 0.001, "10d100");
       beginning.addItem(smashBall);
 
       // nyan cat room
