@@ -1,7 +1,7 @@
 /**
  * Item.java
  * Represents an item with a name and description.
- * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang
+ * @author Emma Shumadine, Lily Orth-Smith, Rachel Zhang (primary)
  * */
 
 public class Item {
